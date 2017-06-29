@@ -1,0 +1,8 @@
+## What do I do
+  In this question, I use ggplot function and draw a graph
+
+## use function
+  - ggplot function : draw a graph
+  - facet_grid function : draw multiple pictures
+  - ggsave function : store pdf file
+  - grid.arrange function : graph two graphs in one picture
