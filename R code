@@ -1,0 +1,48 @@
+# set the folder location
+setwd("D:/1-1. R studio/lecture5. reproducible research")
+
+# Load file, file name is "payments.csv"
+payments<-read.csv(file="payments.csv")
+
+# find the location, New York
+payments_ny<-payments[payments$Provider.City=="NEW YORK",]
+
+
+# draw a graph(Question 1)
+library(ggplot2)
+
+graph<-ggplot(payments_ny,aes(x=Average.Covered.Charges, y=Average.Total.Payments))
+graph<-graph+geom_point(color="red",size=3)
+graph<-graph+labs(title="The relationship between mean covered charges and mean total payment in New york city",
+                  x="Mean covered charges",y="Mean total payments")
+
+ggsave(file="L5_Reproducible Research_week1_plot1.pdf",graph,width=10,height=10)
+
+
+# draw a graph(Question 2)
+library(ggplot2)
+
+graph2<-ggplot(payments,aes(x=Average.Covered.Charges, y=Average.Total.Payments))
+graph2<-graph2+facet_grid(Provider.State~DRG.Definition)
+graph2<-graph2+geom_point()
+graph2<-graph2+labs(title="The relationship between mean covered charges and mean total payment by medical condition & state",
+                      x="Mean covered charges",y="Mean total payments")
+
+ggsave(file="L5_Reproducible Research_week1_plot2.pdf",graph2,width=10,height=10)
+
+
+# draw a graph(Question 2-1)
+library(ggplot2)
+library(gridExtra)
+
+graph12<-ggplot(payments,aes(x=Average.Covered.Charges, y=Average.Total.Payments))
+graph12<-graph12+geom_point(aes(color=DRG.Definition))
+graph12<-graph12+labs(title="The relationship between mean covered charges and mean total payment by medical condition",
+                  x="Mean covered charges",y="Mean total payments")
+
+graph22<-ggplot(payments,aes(x=Average.Covered.Charges, y=Average.Total.Payments))
+graph22<-graph22+geom_point(aes(color=Provider.State))
+graph22<-graph22+labs(title="The relationship between mean covered charges and mean total payment by state",
+                    x="Mean covered charges",y="Mean total payments")
+
+ggsave(file="L5_Reproducible Research_week1_plot2-1.pdf",grid.arrange(graph12,graph22,ncol=2),width=30,height=10)
